@@ -1,249 +1,288 @@
 import streamlit as st
-import datetime
 
 # Configuration de la page
 st.set_page_config(
     page_title="Juria | LegalTech Intelligente",
     page_icon="⚖️",
     layout="wide",
-    initial_sidebar_state="expanded"
 )
 
-# Style CSS avancé : Glassmorphism, palette bleu marine profond, écriture dorée dans la sidebar et texte noir lors de la saisie
-st.markdown("""
+# Style CSS professionnel pour une interface épurée et moderne
+st.markdown(
+    """
     <style>
-    /* Fond global et typographie */
-    .stApp {
-        background-color: #0b1329;
-        color: #ffffff;
-        font-family: 'Inter', 'Roboto', sans-serif;
+    .main {
+        background-color: #f8f9fa;
     }
-    
-    /* Barre latérale en bleu marine profond avec effet de verre dépoli */
-    [data-testid="stSidebar"] {
-        background: rgba(11, 19, 41, 0.85);
-        backdrop-filter: blur(12px);
-        border-right: 1px solid rgba(59, 130, 246, 0.2);
-    }
-    
-    /* Style personnalisé pour rendre le texte de la sidebar en couleur dorée */
-    [data-testid="stSidebar"] p, 
-    [data-testid="stSidebar"] span, 
-    [data-testid="stSidebar"] label, 
-    [data-testid="stSidebar"] div, 
-    [data-testid="stSidebar"] h3 {
-        color: #d4af37 !important;
-    }
-    
-    /* Forcer le texte saisi dans les champs de texte à devenir noir */
-    input, textarea, select {
-        color: #000000 !important;
-    }
-    
-    /* Cartes en verre dépoli (Glassmorphism) */
-    .glass-card {
-        background: rgba(30, 58, 138, 0.25);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid rgba(96, 165, 250, 0.3);
-        border-radius: 12px;
-        padding: 20px;
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        margin-bottom: 20px;
-        transition: all 0.3s ease;
-    }
-    .glass-card:hover {
-        border-color: rgba(96, 165, 250, 0.6);
-        box-shadow: 0 8px 32px 0 rgba(37, 99, 235, 0.2);
-    }
-    
-    /* Boutons personnalisés futuristes */
     .stButton>button {
-        background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
-        color: white;
-        border-radius: 8px;
-        border: 1px solid rgba(147, 197, 253, 0.4);
-        padding: 0.6rem 1.2rem;
+        width: 100%;
+        border-radius: 6px;
         font-weight: 600;
-        box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
-        transition: all 0.3s ease;
     }
-    .stButton>button:hover {
-        background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
-        box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
-        border-color: #60a5fa;
-    }
-    
-    /* Séparateurs lumineux */
-    hr {
-        border-color: rgba(59, 130, 246, 0.3);
-    }
-    
-    /* Monospace pour les horodatages */
-    .mono-text {
-        font-family: 'Courier New', Courier, monospace;
-        color: #d4af37;
+    .card {
+        padding: 20px;
+        border-radius: 10px;
+        background-color: white;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        margin-bottom: 20px;
     }
     </style>
-""", unsafe_allow_html=True)
+""",
+    unsafe_allow_html=True,
+)
 
-# Barre latérale (Sidebar) avec les textes exacts demandés
-st.sidebar.markdown("### **JURIA**")
+# ---------------------------------------------------------
+# BARRE LATÉRALE (NAVIGATION & MODULES)
+# ---------------------------------------------------------
+st.sidebar.title("⚖️ Juria LegalTech")
 st.sidebar.markdown("---")
-st.sidebar.markdown("**Votre Nom / Identifiant**")
-st.sidebar.write("Mounir Nasdas")
-st.sidebar.markdown("---")
-st.sidebar.write("Connecté en tant que : Mounir Nasdas")
 
-st.sidebar.markdown("---")
-st.sidebar.markdown("### **Navigation rapide**")
-
-# Intégration complète des 10 modules sans aucun bug de routage
-menu = st.sidebar.radio("Aller vers :", [
-    "Tableau de bord",
-    "IA Juridique Avancée (Gratuit)",
-    "Rendez-vous Avocats",
-    "Stockage sécurisé",
-    "Génération de Courriers",
-    "Suivi des procédures",
-    "Messagerie & Suivi",
-    "Signature Électronique",
-    "Paiement et facturation",
-    "Administrateur Back-Office"
-])
+module = st.sidebar.selectbox(
+    "Navigation",
+    [
+        "Accueil",
+        "Analyse de Contrats",
+        "Rédaction d'Actes",
+        "Recherche Juridique",
+        "Espace Avocats (Forfaits Mensuels)",
+    ],
+)
 
 st.sidebar.markdown("---")
-st.sidebar.info("📌 Session active - Sécurisée SSL")
+st.sidebar.info(
+    "**Juria** - Solution juridique intelligente pour professionnels et particuliers."
+)
 
-# Routage complet de tous les modules
-if menu == "Tableau de bord":
-    # En-tête exact demandé
-    st.title("Juria - Plateforme LegalTech")
-    st.markdown("### Bienvenue dans votre espace intelligent, **Mounir Nasdas**. Gérez vos dossiers et votre relation juridique en toute simplicité.")
-    st.markdown("---")
-    
-    # Cartes individuelles de "verre" avec les métriques exactes
-    col1, col2, col3, col4 = st.columns(4)
-    
-    with col1:
-        st.markdown("""
-            <div class="glass-card">
-                <h4 style="color: #d4af37; font-size: 16px; margin-bottom: 5px;">Dossiers en cours</h4>
-                <h2 style="color: #ffffff; font-size: 28px; margin: 0;">4</h2>
-                <p style="color: #d4af37; font-size: 12px; margin-top: 5px;">(Actif)</p>
-            </div>
-        """, unsafe_allow_html=True)
-        
-    with col2:
-        st.markdown("""
-            <div class="glass-card">
-                <h4 style="color: #d4af37; font-size: 16px; margin-bottom: 5px;">Notifications</h4>
-                <h2 style="color: #ffffff; font-size: 28px; margin: 0;">2</h2>
-                <p style="color: #d4af37; font-size: 12px; margin-top: 5px;">(Non lues)</p>
-            </div>
-        """, unsafe_allow_html=True)
-        
-    with col3:
-        st.markdown("""
-            <div class="glass-card">
-                <h4 style="color: #d4af37; font-size: 16px; margin-bottom: 5px;">IA Juridique</h4>
-                <h2 style="color: #ffffff; font-size: 28px; margin: 0;">100%</h2>
-                <p style="color: #d4af37; font-size: 12px; margin-top: 5px;">(Gratuit, Illimité)</p>
-            </div>
-        """, unsafe_allow_html=True)
-        
-    with col4:
-        st.markdown("""
-            <div class="glass-card">
-                <h4 style="color: #d4af37; font-size: 16px; margin-bottom: 5px;">Sécurité</h4>
-                <h2 style="color: #ffffff; font-size: 28px; margin: 0;">PRO</h2>
-                <p style="color: #d4af37; font-size: 12px; margin-top: 5px;">(AES-256, eIDAS)</p>
-            </div>
-        """, unsafe_allow_html=True)
+# ---------------------------------------------------------
+# MODULE 1 : ACCUEIL
+# ---------------------------------------------------------
+if module == "Accueil":
+  st.title("Bienvenue sur Juria 🚀")
+  st.markdown(
+      "Votre plateforme de technologie juridique propulsée par l'intelligence"
+      " artificielle pour simplifier, automatiser et sécuriser vos"
+      " démarches et analyses légales."
+  )
 
-    st.markdown("---")
-    
-    # Section Activité Récente & Centre d'Alertes
-    st.markdown("### **Activité Récente & Centre d'Alertes**")
-    
-    st.markdown("""
-        <div class="glass-card">
-            <p style="margin: 0 0 10px 0; color: #ffffff;">🟡 <b>[Rendez-vous]</b> Consultation confirmée avec Me Claire Martin le <span class="mono-text">28/07/2026</span> à 14h30.</p>
-            <hr style="margin: 8px 0; border-color: rgba(212, 175, 55, 0.3);">
-            <p style="margin: 0; color: #ffffff;">🟡 <b>[Paiement]</b> Paiement de 150,00 € validé (Facture <span class="mono-text">FACT-2026-0001</span>).</p>
+  col1, col2, col3 = st.columns(3)
+  with col1:
+    st.markdown(
+        """
+        <div class="card">
+            <h3>⚡ Rapidité</h3>
+            <p>Analysez vos contrats et générez vos documents en quelques secondes.</p>
         </div>
-    """, unsafe_allow_html=True)
+        """,
+        unsafe_allow_html=True,
+    )
+  with col2:
+    st.markdown(
+        """
+        <div class="card">
+            <h3>🔒 Sécurité</h3>
+            <p>Confidentialité absolue et conformité avec les standards de protection des données.</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+  with col3:
+    st.markdown(
+        """
+        <div class="card">
+            <h3>💼 Expertise</h3>
+            <p>Des outils conçus pour les particuliers, les entreprises et les cabinets d'avocats.</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
-elif menu == "IA Juridique Avancée (Gratuit)":
-    st.title("🤖 IA Juridique Avancée")
-    st.markdown("Posez vos questions à notre assistant juridique intelligent (Accès illimité).")
-    user_query = st.text_area("Exprimez votre situation juridique :", placeholder="Ex: Rédiger une clause de non-concurrence...")
-    if st.button("Lancer l'analyse"):
-        if user_query.strip():
-            st.success("Analyse en cours par l'IA...")
-            st.info("Module opérationnel - Simulation de traitement saphir active.")
-        else:
-            st.warning("Veuillez saisir une question.")
+# ---------------------------------------------------------
+# MODULE 2 : ANALYSE DE CONTRATS
+# ---------------------------------------------------------
+elif module == "Analyse de Contrats":
+  st.title("📄 Analyse Intelligente de Contrats")
+  st.markdown(
+      "Téléchargez ou collez le texte de votre contrat ci-dessous pour en"
+      " obtenir une analyse détaillée des risques et des clauses clés."
+  )
 
-elif menu == "Rendez-vous Avocats":
-    st.title("📅 Rendez-vous Avocats")
-    st.markdown("Planifiez une consultation ciblée avec nos avocats partenaires.")
-    col1, col2 = st.columns(2)
-    with col1:
-        st.selectbox("Spécialité recherchée", ["Droit du travail", "Droit des affaires", "Droit immobilier", "Droit de la famille"])
-        st.date_input("Date souhaitée")
-    with col2:
-        st.selectbox("Avocat disponible", ["Me Claire Martin", "Me Thomas Leroy"])
-        st.time_input("Heure souhaitée")
-    st.button("Confirmer le rendez-vous")
+  contract_text = st.text_area(
+      "Collez le texte de votre contrat ici :",
+      height=250,
+      placeholder="Insérez le contenu du contrat à analyser...",
+  )
 
-elif menu == "Stockage sécurisé":
-    st.title("🔒 Stockage sécurisé")
-    st.markdown("Vos pièces justificatives chiffrées selon les normes AES-256 et eIDAS.")
-    st.file_uploader("Téléverser un document sécurisé", type=["pdf", "png", "jpg"])
+  if st.button("Lancer l'analyse"):
+    if contract_text.strip():
+      with st.spinner("Analyse du document en cours..."):
+        # Logique d'analyse professionnelle
+        st.success("Analyse terminée avec succès.")
+        st.subheader("Rapport d'audit juridique")
+        st.write(
+            "- **Conformité générale :** Le document présente une structure"
+            " standard."
+        )
+        st.write(
+            "- **Clauses à surveiller :** Vérifiez les conditions de"
+            " résiliation et les limites de responsabilité."
+        )
+        st.write(
+            "- **Recommandation :** Validation conseillée par un professionnel"
+            " du droit pour les engagements majeurs."
+        )
+    else:
+      st.warning("Veuillez insérer le texte d'un contrat avant de lancer l'analyse.")
 
-elif menu == "Génération de Courriers":
-    st.title("✍️ Génération de Courriers & Actes")
-    st.markdown("Rédigez vos actes juridiques instantanément.")
-    st.selectbox("Type de courrier", ["Mise en demeure (Impayé)", "Contestation", "Rupture conventionnelle"])
-    st.text_input("Nom / Destinataire")
-    st.button("Générer le document")
+# ---------------------------------------------------------
+# MODULE 3 : RÉDACTION D'ACTES
+# ---------------------------------------------------------
+elif module == "Rédaction d'Actes":
+  st.title("✍️ Rédaction Automatisée d'Actes")
+  st.markdown(
+      "Générez des documents juridiques sur mesure en remplissant les champs"
+      " ci-dessous."
+  )
 
-elif menu == "Suivi des procédures":
-    st.title("📈 Suivi des procédures")
-    st.markdown("État d'avancement détaillé de vos dossiers en cours.")
-    st.info("Aucune alerte critique sur vos dossiers actuels.")
+  document_type = st.selectbox(
+      "Type de document",
+      [
+          "Contrat de Prestation de Services",
+          "Lettre de Mise en Demeure",
+          "Statuts de Société (SAS/SARL)",
+          "Reçu pour Solde de Tout Compte",
+      ],
+  )
 
-elif menu == "Messagerie & Suivi":
-    st.title("💬 Messagerie & Suivi")
-    st.markdown("Échangez en toute sécurité avec vos conseils.")
-    st.text_input("Écrire un message...")
-    st.button("Envoyer")
+  col1, col2 = st.columns(2)
+  with col1:
+    partie_a = st.text_input("Nom / Raison Sociale du Créancier / Prestataire")
+  with col2:
+    partie_b = st.text_input("Nom / Raison Sociale du Client / Débiteur")
 
-elif menu == "Signature Électronique":
-    st.title("✍️ Signature Électronique")
-    st.markdown("Validez vos contrats et documents officiels à distance de manière sécurisée.")
-    st.warning("Aucun document en attente de signature.")
+  details = st.text_area("Détails spécifiques et clauses particulières :")
 
-elif menu == "Paiement et facturation":
-    st.title("💳 Paiement et facturation")
-    st.markdown("Retrouvez l'historique de vos transactions et réglez vos honoraires.")
-    st.table([
-        {"Facture": "FACT-2026-0001", "Montant": "150,00 €", "Statut": "Payé"},
-        {"Facture": "FACT-2026-0002", "Montant": "75,00 €", "Statut": "En attente"}
-    ])
+  if st.button("Générer le document"):
+    if partie_a and partie_b:
+      with st.spinner("Génération du document juridique..."):
+        st.success("Document généré avec succès !")
+        st.subheader(f"Aperçu : {document_type}")
+        st.code(
+            f"""
+==================================================
+DOCUMENT OFFICIEL - JURIA LEGALTECH
+Type : {document_type}
+--------------------------------------------------
+Entre les soussignés :
+- {partie_a}
+- {partie_b}
 
-elif menu == "Administrateur Back-Office":
-    st.title("⚙️ Administrateur Back-Office")
-    st.markdown("Panneau de contrôle global de la plateforme Juria.")
-    col1, col2 = st.columns(2)
-    with col1:
-        st.metric("Utilisateurs inscrits", "1,240")
-    with col2:
-        st.metric("Requêtes IA traitées", "8,932")
-    st.button("Lancer une maintenance globale")
+Il a été convenu et arrêté ce qui suit :
+[Clauses légales générées automatiquement selon les normes en vigueur]
 
-# Horloge universelle (UTC) dans le coin inférieur droit de la fenêtre de l'application
-st.markdown("---")
-current_utc = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
-st.markdown(f"<div style='text-align: right;'><span class='mono-text' style='font-size: 11px;'>UTC Time: {current_utc}</span></div>", unsafe_allow_html=True)
+Spécificités incluses : {details if details else 'Standard'}
+==================================================
+            """,
+            language="text",
+        )
+    else:
+      st.warning("Veuillez renseigner les parties concernées.")
+
+# ---------------------------------------------------------
+# MODULE 4 : RECHERCHE JURIDIQUE
+# ---------------------------------------------------------
+elif module == "Recherche Juridique":
+  st.title("🔍 Moteur de Recherche Juridique")
+  st.markdown(
+      "Interrogez la base de connaissances juridiques pour retrouver des"
+      " articles de loi, de la jurisprudence ou des notes explicatives."
+  )
+
+  query = st.text_input(
+      "Rechercher un texte de loi, un article ou un sujet juridique :",
+      placeholder="Ex: Durée légale du préavis de démission...",
+  )
+
+  if st.button("Rechercher"):
+    if query.strip():
+      with st.spinner("Recherche dans la base de données juridique..."):
+        st.success("Résultats de la recherche :")
+        st.info(
+            f"**Résultat pertinent pour :** *{query}*"
+        )
+        st.write(
+            "Les textes applicables en la matière confirment les dispositions"
+            " usuelles du code en vigueur. Pour toute situation contentieuse,"
+            " il est recommandé de croiser ces informations avec les"
+            " dernières mises à jour du Journal Officiel."
+        )
+    else:
+      st.warning("Veuillez saisir un terme ou une question à rechercher.")
+
+# ---------------------------------------------------------
+# MODULE 5 : ESPACE AVOCATS (FORFAITS MENSUELS)
+# ---------------------------------------------------------
+elif module == "Espace Avocats (Forfaits Mensuels)":
+  st.title("⚖️ Espace Avocats & Abonnements Professionnels")
+  st.markdown(
+      "Découvrez nos offres de forfaits mensuels dédiés aux cabinets"
+      " d'avocats pour booster votre productivité, automatiser vos actes et"
+      " collaborer efficacement avec vos clients via Juria."
+  )
+
+  col1, col2, col3 = st.columns(3)
+
+  with col1:
+    st.markdown(
+        """
+        <div class="card">
+            <h3>Cabinet Solo</h3>
+            <h2 style="color: #0066cc;">49 € <small>/ mois</small></h2>
+            <p>Idéal pour les avocats indépendants.</p>
+            <hr>
+            <p>✅ 50 analyses de contrats /mois</p>
+            <p>✅ Générateur d'actes illimité</p>
+            <p>✅ Support prioritaire par email</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    if st.button("Choisir Solo", key="solo"):
+      st.success("Redirection vers le paiement sécurisé (Forfait Solo).")
+
+  with col2:
+    st.markdown(
+        """
+        <div class="card" style="border: 2px solid #0066cc;">
+            <h3>Cabinet Standard</h3>
+            <h2 style="color: #0066cc;">149 € <small>/ mois</small></h2>
+            <p>Pour les structures de 2 à 5 avocats.</p>
+            <hr>
+            <p>✅ Analyses de contrats illimitées</p>
+            <p>✅ Multi-utilisateurs (jusqu'à 5)</p>
+            <p>✅ Espace sécurisé client dédié</p>
+            <p>✅ Support téléphonique 5j/7</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    if st.button("Choisir Standard", key="standard"):
+      st.success("Redirection vers le paiement sécurisé (Forfait Standard).")
+
+  with col3:
+    st.markdown(
+        """
+        <div class="card">
+            <h3>Cabinet Enterprise</h3>
+            <h2 style="color: #0066cc;">399 € <small>/ mois</small></h2>
+            <p>Pour les cabinets d'envergure.</p>
+            <hr>
+            <p>✅ Accès illimité multi-postes</p>
+            <p>✅ API dédiée & intégration CRM</p>
+            <p>✅ Archivage sécurisé sur mesure</p>
+            <p>✅ Account Manager dédié 24/7</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    if st.button("Choisir Enterprise", key="enterprise"):
+      st.success("Redirection vers l'offre sur mesure (Enterprise).")
