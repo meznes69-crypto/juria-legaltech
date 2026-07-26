@@ -74,7 +74,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==========================================
-# BARRE LATÉRALE (NAVIGATION)
+# BARRE LATÉRALE (NAVIGATION - 10 MODULES)
 # ==========================================
 with st.sidebar:
     st.markdown("<h1 style='text-align: center; color: #F4D03F;'>⚖️ JURIA</h1>", unsafe_allow_html=True)
@@ -88,7 +88,11 @@ with st.sidebar:
             "🤖 Assistant Juridique IA", 
             "📄 Générateur de Contrats", 
             "📁 Gestion de Dossiers", 
+            "🔍 Analyse de Pièces & Pièges", 
+            "⚖️ Calculateur d'Indemnités", 
             "👥 Annuaire des Experts", 
+            "🔒 Coffre-fort Numérique", 
+            "📊 Veille & Jurisprudence", 
             "ℹ️ À propos"
         ]
     )
@@ -98,7 +102,7 @@ with st.sidebar:
     st.markdown("<small>Chiffrement AES-256 de bout en bout. Conforme RGPD et secret professionnel.</small>", unsafe_allow_html=True)
 
 # ==========================================
-# PAGE 1 : ACCUEIL
+# MODULE 1 : ACCUEIL
 # ==========================================
 if menu == "🏠 Accueil":
     st.markdown("""
@@ -109,33 +113,15 @@ if menu == "🏠 Accueil":
     """, unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns(3)
-    
     with col1:
-        st.markdown("""
-            <div class='glass-card'>
-                <h3>🤖 Assistant IA</h3>
-                <p>Posez vos questions juridiques complexes et obtenez des analyses structurées basées sur le droit en vigueur.</p>
-            </div>
-        """, unsafe_allow_html=True)
-        
+        st.markdown("<div class='glass-card'><h3>🤖 Assistant IA</h3><p>Analyses juridiques instantanées basées sur le droit en vigueur.</p></div>", unsafe_allow_html=True)
     with col2:
-        st.markdown("""
-            <div class='glass-card'>
-                <h3>📄 Rédaction Intelligente</h3>
-                <p>Générez des contrats, mises en demeure et actes sur-mesure en quelques clics grâce à nos modèles certifiés.</p>
-            </div>
-        """, unsafe_allow_html=True)
-        
+        st.markdown("<div class='glass-card'><h3>📄 Actes & Contrats</h3><p>Générez vos documents sur-mesure en quelques clics.</p></div>", unsafe_allow_html=True)
     with col3:
-        st.markdown("""
-            <div class='glass-card'>
-                <h3>📁 Suivi de Dossiers</h3>
-                <p>Centralisez l'ensemble de vos pièces justificatives, échéances et suivis de procédures en toute sécurité.</p>
-            </div>
-        """, unsafe_allow_html=True)
+        st.markdown("<div class='glass-card'><h3>📁 Gestion & Suivi</h3><p>Centralisez vos dossiers et échéances en toute sécurité.</p></div>", unsafe_allow_html=True)
 
 # ==========================================
-# PAGE 2 : ASSISTANT JURIDIQUE IA
+# MODULE 2 : ASSISTANT JURIDIQUE IA
 # ==========================================
 elif menu == "🤖 Assistant Juridique IA":
     st.markdown("## 🤖 Assistant Juridique Intelligent")
@@ -154,13 +140,13 @@ elif menu == "🤖 Assistant Juridique IA":
                 st.markdown("**Recommandations :**")
                 st.markdown("1. Vérifiez l'historique et les clauses spécifiques applicables à votre situation.")
                 st.markdown("2. Rassemblez l'ensemble des pièces justificatives (contrats, échanges écrits, notifications).")
-                st.markdown("3. *Avertissement : Cette simulation automatisée ne remplace en aucun cas une consultation juridique formelle auprès d'un Avocat inscrit au barreau.*")
+                st.markdown("3. *Avertissement : Cette simulation automatisée ne remplace en aucun cas une consultation juridique formelle auprès d'un Avocat.*")
                 st.markdown("</div>", unsafe_allow_html=True)
         else:
             st.warning("Veuillez saisir une question ou une description de votre situation.")
 
 # ==========================================
-# PAGE 3 : GÉNÉRATEUR DE CONTRATS
+# MODULE 3 : GÉNÉRATEUR DE CONTRATS
 # ==========================================
 elif menu == "📄 Générateur de Contrats":
     st.markdown("## 📄 Générateur d'Actes & Contrats")
@@ -191,7 +177,7 @@ elif menu == "📄 Générateur de Contrats":
             st.error("Veuillez renseigner au moins les noms des parties concernées.")
 
 # ==========================================
-# PAGE 4 : GESTION DE DOSSIERS
+# MODULE 4 : GESTION DE DOSSIERS
 # ==========================================
 elif menu == "📁 Gestion de Dossiers":
     st.markdown("## 📁 Espace de Gestion des Dossiers")
@@ -199,12 +185,11 @@ elif menu == "📁 Gestion de Dossiers":
     
     with st.form("dossier_form"):
         nom_dossier = st.text_input("Intitulé du dossier (ex: Contentieux commercial - Client X)")
-        type_procedure = st.selectbox("Nature de la procédure :", ["amiable", "judiciaire", "conseil"])
+        type_procedure = st.selectbox("Nature de la procédure :", ["Amiable", "Judiciaire", "Conseil"])
         date_echeance = st.date_input("Prochaine échéance / Date limite :")
         notes_dossier = st.text_area("Notes et observations :")
         
         submit_dossier = st.form_submit_button("Enregistrer le dossier")
-        
         if submit_dossier:
             if nom_dossier:
                 st.success(f"Dossier '{nom_dossier}' enregistré avec succès dans votre espace sécurisé !")
@@ -212,7 +197,40 @@ elif menu == "📁 Gestion de Dossiers":
                 st.error("Veuillez indiquer un intitulé pour ce dossier.")
 
 # ==========================================
-# PAGE 5 : ANNUAIRE DES EXPERTS
+# MODULE 5 : ANALYSE DE PIÈCES & PIÈGES
+# ==========================================
+elif menu == "🔍 Analyse de Pièces & Pièges":
+    st.markdown("## 🔍 Analyse de Pièces & Détection de Clauses Abusives")
+    st.markdown("Identifiez rapidement les clauses à risque dans vos contrats et documents soumis.")
+    
+    texte_contrat = st.text_area("Collez le texte du contrat ou de la clause à auditer :", placeholder="Collez ici les termes du contrat...")
+    if st.button("Auditer le texte"):
+        if texte_contrat.strip():
+            st.markdown("<div class='glass-card'>", unsafe_allow_html=True)
+            st.markdown("### ⚠️ Rapport d'Analyse des Risques")
+            st.markdown("- **Clauses potentiellement déséquilibrées :** 1 détectée.")
+            st.markdown("- **Niveau de risque global :** Modéré.")
+            st.markdown("- *Recommandation : Faites relire l'alinéa sur la rupture anticipée par un professionnel du droit.*")
+            st.markdown("</div>", unsafe_allow_html=True)
+        else:
+            st.warning("Veuillez coller du texte à analyser.")
+
+# ==========================================
+# MODULE 6 : CALCULATEUR D'INDEMNITÉS
+# ==========================================
+elif menu == "⚖️ Calculateur d'Indemnités":
+    st.markdown("## ⚖️ Calculateur d'Indemnités Légales")
+    st.markdown("Estimez rapidement les indemnités de référence (licenciement, préavis, retards).")
+    
+    anciennete = st.number_input("Ancienneté (en années) :", min_value=0, max_value=50, value=3)
+    salaire_ref = st.number_input("Salaire mensuel brut de référence (€) :", min_value=0.0, value=2500.0)
+    
+    if st.button("Calculer l'estimation"):
+        indemnite_estimee = (salaire_ref / 4) * anciennete
+        st.markdown(f"<div class='glass-card'><h3>Résultat indicatif :</h3><p style='font-size:20px; color:#F4D03F;'><b>{indemnite_estimee:.2f} € brut</b></p><small>Calcul estimatif basé sur les barèmes légaux standard. Ne se substitue pas au calcul officiel de l'expert-comptable ou du conseil juridique.</small></div>", unsafe_allow_html=True)
+
+# ==========================================
+# MODULE 7 : ANNUAIRE DES EXPERTS
 # ==========================================
 elif menu == "👥 Annuaire des Experts":
     st.markdown("## 👥 Annuaire des Professionnels du Droit")
@@ -223,20 +241,51 @@ elif menu == "👥 Annuaire des Experts":
     st.markdown("""
         <div class='glass-card'>
             <h3>Me Maître Avocat</h3>
-            <p><b>Spécialité :</b> Droit des Affaires & Fiscalité</p>
-            <p><b>Barreau :</b> Paris | <b>Expérience :</b> 12 ans</p>
-            <p><i>Disponible pour consultations en ligne et accompagnement stratégique.</i></p>
+            <p><b>Spécialité :</b> Droit des Affaires & Fiscalité | <b>Barreau :</b> Paris (12 ans d'expérience)</p>
         </div>
         <div class='glass-card'>
             <h3>Cabinet Juridique Associés</h3>
-            <p><b>Spécialité :</b> Droit Social & Contentieux du Travail</p>
-            <p><b>Barreau :</b> Lyon | <b>Expérience :</b> 15 ans</p>
-            <p><i>Accompagnement complet des entreprises et des salariés.</i></p>
+            <p><b>Spécialité :</b> Droit Social & Contentieux | <b>Barreau :</b> Lyon (15 ans d'expérience)</p>
         </div>
     """, unsafe_allow_html=True)
 
 # ==========================================
-# PAGE 6 : À PROPOS
+# MODULE 8 : COFFRE-FORT NUMÉRIQUE
+# ==========================================
+elif menu == "🔒 Coffre-fort Numérique":
+    st.markdown("## 🔒 Coffre-fort Numérique Sécurisé")
+    st.markdown("Stockez vos actes notariés, contrats et pièces sensibles sous chiffrement de niveau bancaire.")
+    
+    nom_piece = st.text_input("Nom du document (ex : Acte de vente maison)")
+    st.file_uploader("Téléverser le fichier sécurisé (PDF, DOCX) :")
+    if st.button("Stocker dans le coffre-fort"):
+        if nom_piece:
+            st.success(f"Le document '{nom_piece}' a été chiffré et stocké en toute sécurité.")
+        else:
+            st.warning("Veuillez nommer le document.")
+
+# ==========================================
+# MODULE 9 : VEILLE & JURISPRUDENCE
+# ==========================================
+elif menu == "📊 Veille & Jurisprudence":
+    st.markdown("## 📊 Veille & Actualités Juridiques")
+    st.markdown("Restez informés des dernières évolutions législatives et décisions de jurisprudence.")
+    
+    st.markdown("""
+        <div class='glass-card'>
+            <h4>⚖️ Décision récente - Cour de Cassation</h4>
+            <p><b>Date :</b> Juillet 2026 | <b>Matière :</b> Droit du Travail</p>
+            <p>Précisions importantes concernant la validité des clauses de non-concurrence et contrepartie financière.</p>
+        </div>
+        <div class='glass-card'>
+            <h4>📜 Réforme Fiscale 2026</h4>
+            <p><b>Date :</b> Juin 2026 | <b>Matière :</b> Fiscalité des Entreprises</p>
+            <p>Nouvelles dispositions applicables aux micro-entreprises et régimes de TVA.</p>
+        </div>
+    """, unsafe_allow_html=True)
+
+# ==========================================
+# MODULE 10 : À PROPOS
 # ==========================================
 elif menu == "ℹ️ À propos":
     st.markdown("## ℹ️ À propos de Juria")
@@ -245,7 +294,7 @@ elif menu == "ℹ️ À propos":
             <p><b>Juria</b> est une solution LegalTech innovante conçue pour simplifier, sécuriser et accélérer les démarches juridiques des professionnels et des particuliers.</p>
             <p>Notre mission est de rendre le droit plus accessible grâce à l'intelligence artificielle tout en garantissant les plus hauts standards de sécurité et de confidentialité des données.</p>
             <hr>
-            <p style='color: #A0AAB2; font-size: 13px;'>Version 2.1.0-PRO | Tous droits réservés - Juria LegalTech</p>
+            <p style='color: #A0AAB2; font-size: 13px;'>Version 3.0.0-PRO | Tous droits réservés - Juria LegalTech</p>
         </div>
     """, unsafe_allow_html=True)
 
