@@ -12,7 +12,7 @@ st.set_page_config(
 )
 
 # ==========================================
-# STYLE CSS AVANCÉ (Glassmorphism & Thème Pro)
+# STYLE CSS AVANCÉ & TEXTE EN NOIR LORS DE LA SAISIE
 # ==========================================
 st.markdown("""
     <style>
@@ -64,12 +64,11 @@ st.markdown("""
         color: #F4D03F !important;
     }
     
-    /* Champs de saisie */
-    .stTextInput>div>div>input, .stTextArea>div>div>textarea, .stSelectbox>div>div>div {
-        background-color: #0B132B !important;
+    /* Forcer l'écriture en NOIR lors de la saisie dans les champs de texte */
+    .stTextInput input, .stTextArea textarea, .stSelectbox div[data-baseweb="select"] {
         color: #000000 !important;
-        border: 1px solid #3A506B !important;
-        border-radius: 6px;
+        background-color: #FFFFFF !important;
+        -webkit-text-fill-color: #000000 !important;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -84,7 +83,14 @@ with st.sidebar:
     
     menu = st.radio(
         "Navigation",
-        ["🏠 Accueil", "🤖 Assistant Juridique IA", "📄 Générateur de Contrats", "💼 Espace Avocats & Abonnements", "ℹ️ À propos"]
+        [
+            "🏠 Accueil", 
+            "🤖 Assistant Juridique IA", 
+            "📄 Générateur de Contrats", 
+            "📁 Gestion de Dossiers", 
+            "👥 Annuaire des Experts", 
+            "ℹ️ À propos"
+        ]
     )
     
     st.markdown("---")
@@ -123,8 +129,8 @@ if menu == "🏠 Accueil":
     with col3:
         st.markdown("""
             <div class='glass-card'>
-                <h3>💼 Réseau Avocats</h3>
-                <p>Connectez-vous avec des experts qualifiés et gérez vos abonnements professionnels en toute simplicité.</p>
+                <h3>📁 Suivi de Dossiers</h3>
+                <p>Centralisez l'ensemble de vos pièces justificatives, échéances et suivis de procédures en toute sécurité.</p>
             </div>
         """, unsafe_allow_html=True)
 
@@ -185,61 +191,52 @@ elif menu == "📄 Générateur de Contrats":
             st.error("Veuillez renseigner au moins les noms des parties concernées.")
 
 # ==========================================
-# PAGE 4 : ESPACE AVOCATS & ABONNEMENTS
+# PAGE 4 : GESTION DE DOSSIERS
 # ==========================================
-elif menu == "💼 Espace Avocats & Abonnements":
-    st.markdown("## 💼 Espace Professionnel & Abonnements Avocats")
-    st.markdown("Optimisez votre cabinet grâce à nos offres sur-mesure conçues pour booster votre visibilité et automatiser vos actes.")
+elif menu == "📁 Gestion de Dossiers":
+    st.markdown("## 📁 Espace de Gestion des Dossiers")
+    st.markdown("Suivez l'état d'avancement de vos procédures et centralisez vos pièces.")
     
-    col_p1, col_p2, col_p3 = st.columns(3)
-    
-    with col_p1:
-        st.markdown("""
-            <div class='glass-card'>
-                <h3 style='text-align: center;'>Standard</h3>
-                <h2 style='text-align: center; color: #F4D03F;'>49 € <small>/mois</small></h2>
-                <hr>
-                <p><b>✔️ Annuaire Juria :</b> Référencement de base</p>
-                <p><b>✔️ IA :</b> 50 requêtes / mois</p>
-                <p><b>✔️ Modèles :</b> Accès standard</p>
-                <br>
-            </div>
-        """, unsafe_allow_html=True)
-        if st.button("Choisir Standard", key="btn_std"):
-            st.info("Redirection vers le portail de paiement sécurisé (Standard)...")
-
-    with col_p2:
-        st.markdown("""
-            <div class='glass-card' style='border: 2px solid #F4D03F;'>
-                <h3 style='text-align: center;'>Cabinet Pro</h3>
-                <h2 style='text-align: center; color: #F4D03F;'>149 € <small>/mois</small></h2>
-                <hr>
-                <p><b>⭐ Annuaire Juria :</b> Profil mis en avant</p>
-                <p><b>🤖 IA :</b> Requêtes illimitées</p>
-                <p><b>📄 Modèles :</b> Personnalisation avancée</p>
-                <p><b>🔒 Sécurité :</b> Support prioritaire 24/7</p>
-            </div>
-        """, unsafe_allow_html=True)
-        if st.button("Choisir Cabinet Pro", key="btn_pro"):
-            st.success("Souscription en cours au forfait Cabinet Pro...")
-
-    with col_p3:
-        st.markdown("""
-            <div class='glass-card'>
-                <h3 style='text-align: center;'>Cabinet Enterprise</h3>
-                <h2 style='text-align: center; color: #F4D03F;'>Sur devis</h2>
-                <hr>
-                <p><b>🏢 Multi-utilisateurs :</b> Jusqu'à 15 collaborateurs</p>
-                <p><b>⚙️ API :</b> Intégration sur-mesure</p>
-                <p><b>👨‍💼 Account Manager :</b> Dédié</p>
-                <br>
-            </div>
-        """, unsafe_allow_html=True)
-        if st.button("Contacter l'équipe", key="btn_ent"):
-            st.info("Un conseiller expert vous contactera sous 24h.")
+    with st.form("dossier_form"):
+        nom_dossier = st.text_input("Intitulé du dossier (ex: Contentieux commercial - Client X)")
+        type_procedure = st.selectbox("Nature de la procédure :", ["amiable", "judiciaire", "conseil"])
+        date_echeance = st.date_input("Prochaine échéance / Date limite :")
+        notes_dossier = st.text_area("Notes et observations :")
+        
+        submit_dossier = st.form_submit_button("Enregistrer le dossier")
+        
+        if submit_dossier:
+            if nom_dossier:
+                st.success(f"Dossier '{nom_dossier}' enregistré avec succès dans votre espace sécurisé !")
+            else:
+                st.error("Veuillez indiquer un intitulé pour ce dossier.")
 
 # ==========================================
-# PAGE 5 : À PROPOS
+# PAGE 5 : ANNUAIRE DES EXPERTS
+# ==========================================
+elif menu == "👥 Annuaire des Experts":
+    st.markdown("## 👥 Annuaire des Professionnels du Droit")
+    st.markdown("Trouvez un conseil qualifié ou un partenaire expert pour vous accompagner.")
+    
+    spec = st.selectbox("Filtrer par spécialité :", ["Tous", "Droit des Affaires", "Droit Immobilier", "Droit Social", "Droit Pénal"])
+    
+    st.markdown("""
+        <div class='glass-card'>
+            <h3>Me Maître Avocat</h3>
+            <p><b>Spécialité :</b> Droit des Affaires & Fiscalité</p>
+            <p><b>Barreau :</b> Paris | <b>Expérience :</b> 12 ans</p>
+            <p><i>Disponible pour consultations en ligne et accompagnement stratégique.</i></p>
+        </div>
+        <div class='glass-card'>
+            <h3>Cabinet Juridique Associés</h3>
+            <p><b>Spécialité :</b> Droit Social & Contentieux du Travail</p>
+            <p><b>Barreau :</b> Lyon | <b>Expérience :</b> 15 ans</p>
+            <p><i>Accompagnement complet des entreprises et des salariés.</i></p>
+        </div>
+    """, unsafe_allow_html=True)
+
+# ==========================================
+# PAGE 6 : À PROPOS
 # ==========================================
 elif menu == "ℹ️ À propos":
     st.markdown("## ℹ️ À propos de Juria")
@@ -248,7 +245,7 @@ elif menu == "ℹ️ À propos":
             <p><b>Juria</b> est une solution LegalTech innovante conçue pour simplifier, sécuriser et accélérer les démarches juridiques des professionnels et des particuliers.</p>
             <p>Notre mission est de rendre le droit plus accessible grâce à l'intelligence artificielle tout en garantissant les plus hauts standards de sécurité et de confidentialité des données.</p>
             <hr>
-            <p style='color: #A0AAB2; font-size: 13px;'>Version 2.0.0-PRO | Tous droits réservés - Juria LegalTech</p>
+            <p style='color: #A0AAB2; font-size: 13px;'>Version 2.1.0-PRO | Tous droits réservés - Juria LegalTech</p>
         </div>
     """, unsafe_allow_html=True)
 
