@@ -141,7 +141,6 @@ elif menu == "🤖 Assistant Juridique IA":
     if st.button("Lancer l'analyse juridique"):
         if question.strip():
             with st.spinner("Analyse de la législation en cours..."):
-                # Simulation d'une réponse structurée d'expert
                 st.markdown("<div class='glass-card'>", unsafe_allow_html=True)
                 st.markdown("### 📌 Synthèse & Analyse Préliminaire")
                 st.markdown(f"**Domaine concerné :** {domaine}")
@@ -169,7 +168,7 @@ elif menu == "📄 Générateur de Contrats":
     with col_b:
         partie_2 = st.text_input("Nom / Raison sociale (Débiteur / Client) :")
         
-, details = st.text_area("Détails spécifiques et clauses particulières :")
+    details = st.text_area("Détails spécifiques et clauses particulières :")
     
     if st.button("Générer le document"):
         if partie_1 and partie_2:
